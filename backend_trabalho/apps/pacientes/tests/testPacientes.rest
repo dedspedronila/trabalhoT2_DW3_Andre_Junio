@@ -1,0 +1,65 @@
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "qwe",
+    "password": "qwe"
+}
+
+###
+@accessToken = {{loginAutenticado.response.body.$.token}}
+@username = {{loginAutenticado.response.body.$.username}}
+
+# 1. Inserir novo paciente (InsertPaciente)
+# @name insertPaciente
+POST http://localhost:40000/insertPaciente HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nome": "Ana Clara Mendes",
+    "cpf": "444.555.666-77",
+    "telefone": "(17) 99777-8899",
+    "data_nascimento": "1998-05-14",
+    "removido": false
+}
+
+###
+# 2. Listar todos os pacientes ativos (GetAllPacientes)
+GET http://localhost:40000/getAllPacientes HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# 3. Buscar paciente por ID (GetPacienteByID)
+GET http://localhost:40000/getPacienteByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# 4. Atualizar paciente por ID (UpdatePaciente)
+PUT http://localhost:40000/updatePaciente/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "nome": "Carlos Eduardo Silva Alterado",
+    "cpf": "111.222.333-44",
+    "telefone": "(17) 99111-9999",
+    "data_nascimento": "1985-04-12",
+    "removido": false
+}
+
+###
+# 5. Listar pacientes para selecao em consultas (GetPacientesToConsultas)
+GET http://localhost:40000/getPacientesToConsultas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# 6. Exclusao logica do paciente (DeletePaciente)
+DELETE http://localhost:40000/deletePaciente/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+

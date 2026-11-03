@@ -1,0 +1,61 @@
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "qwe",
+    "password": "qwe"
+}
+
+###
+@accessToken = {{loginAutenticado.response.body.$.token}}
+@username = {{loginAutenticado.response.body.$.username}}
+
+# 1. Inserir nova consulta vinculada ao paciente (InsertConsulta)
+# @name insertConsulta
+POST http://localhost:40000/insertConsulta HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "paciente_id": 1,
+    "medico_nome": "Dr. Lucas Ramos",
+    "data_consulta": "2026-04-05",
+    "valor_consulta": 220.00,
+    "diagnostico": "Exame oftalmologico preventivo sem queixas",
+    "removido": false
+}
+
+###
+# 2. Listar todas as consultas ativas (GetAllConsultas)
+GET http://localhost:40000/getAllConsultas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# 3. Buscar consulta por ID (GetConsultaByID)
+GET http://localhost:40000/getConsultaByID/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+# 4. Atualizar consulta por ID (UpdateConsulta)
+PUT http://localhost:40000/updateConsulta/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "paciente_id": 1,
+    "medico_nome": "Dra. Beatriz Costa",
+    "data_consulta": "2026-03-10",
+    "valor_consulta": 280.00,
+    "diagnostico": "Consulta cardiologica de rotina - Eletrocardiograma normal",
+    "removido": false
+}
+
+###
+# 5. Exclusao logica da consulta (DeleteConsulta)
+DELETE http://localhost:40000/deleteConsulta/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+

@@ -1,0 +1,17 @@
+# Dependencias
+node_modules/
+
+# Variaveis de ambiente e segredos
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.sw?

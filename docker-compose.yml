@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # Servidor de Banco de Dados PostgreSQL (SGBD)
+  # ==========================================
+  db:
+    image: postgres:16-alpine
+    container_name: erp_saude_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-postgres}
+      POSTGRES_DB: ${DB_NAME:-erp_saude}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend_trabalho/databaseConfig.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-erp_saude}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  # ==========================================
+  # Servidor Backend (Node.js / Express API)
+  # ==========================================
+  backend:
+    build:
+      context: ./backend_trabalho
+      dockerfile: Dockerfile
+    container_name: erp_saude_backend
+    restart: always
+    environment:
+      PORT: 40000
+      SECRET_API: ${SECRET_API:-super_secret_jwt_key_dw3_health_erp_2026}
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASS: ${DB_PASS:-postgres}
+      DB_NAME: ${DB_NAME:-erp_saude}
+    ports:
+      - "40000:40000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # ==========================================
+  # Servidor Front-End (Exemplo de integracao)
+  # Quando adicionar seu front-end ao projeto,
+  # basta descomentar o bloco abaixo e apontar para a pasta dele:
+  # ==========================================
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: erp_saude_frontend
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+
