@@ -3,8 +3,8 @@ const db = require("../../../database/databaseconfig"); // importa o modulo de c
 const GetAllConsultas = async () => { // busca todas as consultas ativas (removido = false)
     return (
         await db.query(
-            "SELECT c.*, (SELECT nome FROM pacientes WHERE id = c.paciente_id) AS nome_paciente " +
-            "FROM consultas c WHERE c.removido = false ORDER BY c.data_consulta DESC, c.id DESC"
+            "SELECT *, (SELECT nome FROM pacientes WHERE id = consultas.paciente_id) AS nome_paciente " +
+            "FROM consultas WHERE removido = false ORDER BY data_consulta DESC, id DESC"
         )
     ).rows;
 };
@@ -12,8 +12,8 @@ const GetAllConsultas = async () => { // busca todas as consultas ativas (removi
 const GetConsultaByID = async (consultaIDPar) => { // busca uma consulta especifica pelo id (removido = false)
     return (
         await db.query(
-            "SELECT c.*, (SELECT nome FROM pacientes WHERE id = c.paciente_id) AS nome_paciente " +
-            "FROM consultas c WHERE c.id = $1 AND c.removido = false",
+            "SELECT *, (SELECT nome FROM pacientes WHERE id = consultas.paciente_id) AS nome_paciente " +
+            "FROM consultas WHERE id = $1 AND removido = false",
             [consultaIDPar]
         )
     ).rows;
@@ -38,7 +38,7 @@ const InsertConsulta = async (consultaREGPar) => { // cadastra uma nova consulta
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlConsultas InsertConsulta] " + (error.detail || error.message);
+        msg = "[mdlConsultas|InsertConsulta] " + (error.detail || error.message);
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
@@ -70,7 +70,7 @@ const UpdateConsulta = async (consultaIDPar, consultaREGPar) => { // atualiza um
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlConsultas UpdateConsulta] " + (error.detail || error.message);
+        msg = "[mdlConsultas|UpdateConsulta] " + (error.detail || error.message);
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
@@ -87,7 +87,7 @@ const DeleteConsulta = async (consultaIDPar) => { // efetua o soft delete marcan
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlConsultas DeleteConsulta] " + (error.detail || error.message);
+        msg = "[mdlConsultas|DeleteConsulta] " + (error.detail || error.message);
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
@@ -100,4 +100,3 @@ module.exports = {
     UpdateConsulta,
     DeleteConsulta,
 };
-

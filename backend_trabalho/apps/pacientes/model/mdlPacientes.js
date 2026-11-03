@@ -11,7 +11,7 @@ const GetAllPacientes = async () => { // busca todos os pacientes ativos (removi
 const GetPacienteByID = async (pacienteIDPar) => { // busca um paciente especifico pelo id (removido = false)
     return (
         await db.query(
-            "SELECT * FROM pacientes WHERE id = $1 AND removido = false",
+            "SELECT * FROM pacientes WHERE id = $1 AND removido = false ORDER BY nome ASC",
             [pacienteIDPar]
         )
     ).rows;
@@ -35,7 +35,7 @@ const InsertPaciente = async (pacienteREGPar) => { // insere um novo paciente no
             )
         ).rowCount;
     } catch (error) { // captura erros caso a insercao falhe (ex: cpf duplicado)
-        msg = "[mdlPacientes InsertPaciente] " + (error.detail || error.message);
+        msg = "[mdlPacientes|InsertPaciente] " + (error.detail || error.message);
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
@@ -65,7 +65,7 @@ const UpdatePaciente = async (pacienteIDPar, pacienteREGPar) => { // atualiza um
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlPacientes UpdatePaciente] " + (error.detail || error.message);
+        msg = "[mdlPacientes|UpdatePaciente] " + (error.detail || error.message);
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
@@ -82,7 +82,7 @@ const DeletePaciente = async (pacienteIDPar) => { // executa o soft delete marca
             )
         ).rowCount;
     } catch (error) {
-        msg = "[mdlPacientes DeletePaciente] " + (error.detail || error.message);
+        msg = "[mdlPacientes|DeletePaciente] " + (error.detail || error.message);
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
@@ -104,4 +104,3 @@ module.exports = {
     DeletePaciente,
     GetPacientesToConsultas,
 };
-

@@ -1,24 +1,16 @@
-# Usa a imagem oficial do Node.js baseada em Alpine Linux para ser leve e segura
-FROM node:20-alpine
+FROM node:24-bookworm-slim
 
-# Define o diretorio de trabalho dentro do container
+ENV NODE_ENV=production
+
 WORKDIR /app
 
-# Copia os manifestos de dependencias
-COPY package*.json ./
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
 
-# Instala apenas as dependencias de producao
-RUN npm install --omit=dev
+COPY --chown=node:node . .
 
-# Copia todo o codigo-fonte do backend
-COPY . .
+USER node
 
-# Informa a porta em que a aplicacao escuta
 EXPOSE 40000
 
-# Variavel padrao de porta
-ENV PORT=40000
-
-# Comando para iniciar o servidor
-CMD ["npm", "start"]
-
+CMD ["node", "app.js"]
