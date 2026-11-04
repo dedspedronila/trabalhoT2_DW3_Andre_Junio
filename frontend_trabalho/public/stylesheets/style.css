@@ -1,0 +1,112 @@
+:root {
+  --bank-navy: #0a192f;
+  --bank-navy-light: #112240;
+  --bank-primary: #0f766e;
+  --bank-primary-hover: #0d9488;
+  --bank-gold: #d97706;
+  --bank-bg: #f0f4f8;
+  --bank-text: #0f172a;
+  --bank-muted: #475569;
+}
+
+body {
+  background: var(--bank-bg);
+  color: var(--bank-text);
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-main {
+  min-height: calc(100vh - 64px);
+}
+
+.app-navbar {
+  min-height: 64px;
+  background: linear-gradient(90deg, var(--bank-navy) 0%, var(--bank-navy-light) 100%) !important;
+  border-bottom: 2px solid rgba(13, 148, 136, 0.45);
+}
+
+.navbar-brand {
+  letter-spacing: 0.02em;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, var(--bank-primary) 0%, var(--bank-primary-hover) 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.login-screen {
+  min-height: calc(100vh - 64px);
+  padding: 3rem 1rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  border-radius: 1.15rem;
+  border-top: 4px solid var(--bank-primary) !important;
+  background: #ffffff;
+}
+
+.page-card {
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-kicker {
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--bank-primary) !important;
+}
+
+.hero-card {
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, #0a192f 0%, #134e4a 100%);
+  color: #ffffff;
+}
+
+.hero-card .text-secondary {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.bank-stat-card {
+  border-radius: 1rem;
+  background: #ffffff;
+  border-left: 4px solid var(--bank-primary);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bank-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: var(--bank-primary);
+  border-color: var(--bank-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--bank-primary-hover);
+  border-color: var(--bank-primary-hover);
+}

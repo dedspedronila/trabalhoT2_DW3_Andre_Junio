@@ -1,0 +1,14 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-danger">{{ title }}</h1>
+  <p>{{ message }}</p>
+  {% if error.status %}
+    <p class="badge bg-secondary">{{ error.status }}</p>
+  {% endif %}
+  {% if error.stack %}
+    <pre class="bg-light p-3 border rounded"><code>{{ error.stack }}</code></pre>
+  {% endif %}
+</div>
+{% endblock %}

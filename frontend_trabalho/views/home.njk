@@ -1,0 +1,37 @@
+<!--views/home.njk -->
+
+{% extends "layout.njk" %}
+
+{% block content %}
+  <header class="page-header">
+    <p class="page-kicker text-primary fw-semibold mb-2">Sistema de Gestão Hospitalar</p>
+    <h1 class="display-6 fw-bold mb-2">Painel de Saúde Principal</h1>
+    <p class="text-secondary mb-0">Use a navegação superior para acessar consultas médicas, pacientes ou encerrar a sessão.</p>
+  </header>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="bank-stat-card card border-0 shadow-sm h-100">
+        <div class="card-body p-4">
+          <p class="page-kicker fw-semibold mb-1">Cadastro & Prontuário</p>
+          <h3 class="h5 fw-bold mb-2">Pacientes</h3>
+          <p class="text-secondary small mb-3">Consulte nomes, CPFs, telefones de contato e datas de nascimento dos pacientes ativos.</p>
+          <a class="btn btn-sm btn-outline-dark" href="/pacientes">Acessar Pacientes</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="bank-stat-card card border-0 shadow-sm h-100">
+        <div class="card-body p-4">
+          <p class="page-kicker fw-semibold mb-1">Atendimentos & Agendamentos</p>
+          <h3 class="h5 fw-bold mb-2">Consultas Médicas</h3>
+          <p class="text-secondary small mb-3">Registre e acompanhe consultas médicas, diagnósticos e valores vinculados aos pacientes ativos.</p>
+          <a class="btn btn-sm btn-outline-dark" href="/consultas">Acessar Consultas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/frontend.js"></script>
+  <script src="/apps/home/vwHome.js"></script>
+{% endblock %}
